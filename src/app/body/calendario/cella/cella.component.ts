@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
 @Component({
@@ -6,13 +6,26 @@ import { FormControl } from '@angular/forms';
   templateUrl: './cella.component.html',
   styleUrls: ['./cella.component.scss']
 })
-export class CellaComponent {
+export class CellaComponent implements OnInit {
 
-  toppings = new FormControl();
-  toppingList: string[] = ['M', 'P', 'N', 'R', 'R2', 'R3', 'R12', 'MAL', 'LO'];
+  turni = new FormControl();
+  listaTurni: string[] = ['M', 'P', 'N', 'R', 'R2', 'R3', 'R12', 'MAL', 'LO'];
+  turniSelezionati: string[] = [];
+  
+  @Input()
+  giorno:number = 0;
 
   constructor() { }
 
-  
+  ngOnInit(): void {
+    
+  }
+
+  onSelectionChange(){
+    console.log(this.turni.value);
+    console.log(this.giorno);
+    //Rimuovo tutti gli elementi dell'array e lo popolo con quelli appena scelti
+    this.turniSelezionati.splice(0, this.turniSelezionati.length, this.turni.value);
+  }
 
 }

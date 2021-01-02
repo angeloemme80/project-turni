@@ -1,12 +1,15 @@
-<mat-form-field appearance="fill">
-  <mat-label>Turni</mat-label>
-  <mat-select [formControl]="toppings" multiple>
-    <mat-select-trigger>
-      {{toppings.value ? toppings.value[0] : ''}}
-      <span *ngIf="toppings.value?.length > 1" class="example-additional-selection">
-        (+{{toppings.value.length - 1}} {{toppings.value?.length === 2 ? 'other' : 'others'}})
+<mat-form-field appearance="" class="aspetto">
+  <mat-label>...</mat-label>
+  <mat-select [formControl]="turni" multiple (selectionChange)="onSelectionChange()" >
+    <mat-select-trigger >
+      <span *ngFor="let turnoSelezionato of turniSelezionati" class="additional-selection">{{turnoSelezionato}}</span>
+      <!--
+      {{turni.value ? turni.value[0] : ''}}
+      <span *ngIf="turni.value?.length > 1" class="additional-selection">
+        (+{{turni.value.length - 1}} {{turni.value?.length === 2 ? 'other' : 'othersddd'}})
       </span>
+      -->
     </mat-select-trigger>
-    <mat-option *ngFor="let topping of toppingList" [value]="topping">{{topping}}</mat-option>
+    <mat-option *ngFor="let turno of listaTurni" [value]="turno">{{turno}}</mat-option>
   </mat-select>
 </mat-form-field>
