@@ -1,0 +1,27 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col">
+            <table border="1">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th *ngFor="let giorno of giorni">{{giorno}}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let persona of personale">
+                    <td>{{persona}}</td>
+                    <td *ngFor="let giorno of giorni">{{persona}} gg {{giorno}}</td>
+                  </tr>
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <th>#</th>
+                    <th *ngFor="let giorno of giorni">{{giorno}}</th>
+                  </tr>
+                </tfoot>
+              </table>
+        </div>
+    </div>
+</div>
+
