@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, Input, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
 @Component({
@@ -15,7 +15,9 @@ export class CellaComponent implements OnInit {
   @Input()
   giorno:number = 0;
 
-  constructor() { }
+  constructor(public elementRef: ElementRef) { 
+    this.elementRef.nativeElement.classList.remove('mat-form-field-appearance-legacy');
+  }
 
   ngOnInit(): void {
     
