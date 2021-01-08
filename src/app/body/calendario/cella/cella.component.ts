@@ -34,11 +34,6 @@ export class CellaComponent implements OnInit {
     //Rimuovo tutti gli elementi dell'array e lo popolo con quelli appena scelti
     this.turniSelezionati.splice(0, this.turniSelezionati.length, this.turni.value);
     
-    //this.listaTurni.push(new Turno(this.persona,this.giorno,this.calendarioService.getHeaderMese(),this.calendarioService.getHeaderAnno(),this.turni.value ));
-    //this.listaTurni.map( obj => this.listaTurni.find(o => o.name === obj.name) || obj );
-    //console.log(this.turniSelezionati)
-    //console.log(this.calendarioService.listaTurni);
-    
     //Filtro il turno in base al nome giorno mese e anno per aggiungerci i turni selezionati
     let filtrato:Turno[] = this.calendarioService.listaTurni.filter( x => {
       return x.name.includes(this.persona) && x.giorno===this.giorno && x.mese===this.calendarioService.getHeaderMese() && x.anno===this.calendarioService.getHeaderAnno();
@@ -52,6 +47,7 @@ export class CellaComponent implements OnInit {
     });
     console.log(this.calendarioService.listaTurni);
     
+    //TODO da invocare il metodo che effettua i calcoli in base all'array appana calcolato (this.calendarioService.listaTurni)
 
   }
 
