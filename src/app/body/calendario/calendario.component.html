@@ -11,7 +11,7 @@
                 <tbody>
                   <tr *ngFor="let persona of personale">
                     <td>{{persona}}</td>
-                    <td *ngFor="let giorno of giorni"><app-cella [giorno]="giorno"></app-cella></td>
+                    <td *ngFor="let giorno of giorni"><app-cella [giorno]="giorno" [persona]="persona"></app-cella></td>
                   </tr>
                 </tbody>
                 <tfoot>
@@ -23,5 +23,39 @@
               </table>
         </div>
     </div>
+</div>
+
+<div class="container-fluid">
+  
+  <div class="row">
+    <div class="col">
+      <hr>
+    </div>
+  </div>
+
+  <div class="row">
+      <div class="col">
+          <table border="1">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th *ngFor="let tipologia of tipologie">{{tipologia}}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let persona of personale">
+                  <td>{{persona}}</td>
+                  <td *ngFor="let tipologia of tipologie"></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>#</th>
+                  <th *ngFor="let tipologia of tipologie">{{tipologia}}</th>
+                </tr>
+              </tfoot>
+            </table>
+      </div>
+  </div>
 </div>
 

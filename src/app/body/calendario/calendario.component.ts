@@ -11,7 +11,8 @@ export class CalendarioComponent implements OnInit, OnDestroy {
   constructor(private calendarioService:CalendarioServiceService) { }
 
   giorni:number[] = [];
-  personale:string[] = ['RUSSO M.','RESCIGNO','ANGELO','ANGELA','VITTORIA'];
+  personale:string[] = this.calendarioService.personale;
+  tipologie:string[] = this.calendarioService.tipologie;
   
 
   ngOnInit(): void {

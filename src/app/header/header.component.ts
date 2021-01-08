@@ -8,17 +8,16 @@ import { CalendarioServiceService } from '../servizi/calendario-service.service'
 })
 export class HeaderComponent implements OnInit {
 
+  constructor(private calendarioService:CalendarioServiceService) {}
+
   millisecondi:number = 100;
-
-  constructor(private calendarioService:CalendarioServiceService) {
-  }
-
-  ngOnInit(): void {
-
-  }
-
   mesi:string[] = ['Gennaio','Febbraio','Marzo','Aprile','Maggio','Giugno','Luglio','Agosto','Settembre','Ottobre','Novembre','Dicembre'];
-
+  
+  ngOnInit(): void {
+    this.calendarioService.setHeaderAnno(this.getAnnoCorrente());
+    this.calendarioService.setHeaderMese(new Date().getMonth());
+  }
+  
   getAnnoCorrente(){
     //var d:Date = new Date();
     //console.log(this.mesi[d.getMonth()]);
