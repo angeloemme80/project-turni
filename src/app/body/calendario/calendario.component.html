@@ -43,9 +43,20 @@
                 </tr>
               </thead>
               <tbody>
+                <!--
                 <tr *ngFor="let persona of personale">
                   <td>{{persona}}</td>
                   <td *ngFor="let tipologia of tipologie"><app-totali [persona]="persona" [tipologia]="tipologia"></app-totali></td>
+                </tr>
+                -->
+                <tr *ngFor="let tot of listaTotali">
+                  <td>{{tot.name}}</td>
+                  <td><b>{{tot.presenze}}</b></td>
+                  <td><b>{{tot.notti}}</b></td>
+                  <td><b>{{tot.saleOperatorie}}</b></td>
+                  <td><b>{{tot.oreFestive}}</b></td>
+                  <td><b>{{tot.oreReperibilita}}</b></td>
+                  <td><b>{{tot.fineSettimanaLiberi}}</b></td>
                 </tr>
               </tbody>
               <tfoot>

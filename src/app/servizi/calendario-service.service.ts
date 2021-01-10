@@ -20,6 +20,7 @@ export class CalendarioServiceService {
   listaTurni:Turno[] = [];
   totaliElementRef:ElementRef[] = [];//Forse da eliminare
   listaTotali:Totale[] = [];
+  listaTotaliChange: EventEmitter<Totale[]> = new EventEmitter();
   
 
   getHeaderAnno():number{
@@ -60,6 +61,7 @@ export class CalendarioServiceService {
       this.calcolaByNome(arrayPersonale);
     });
     console.log(this.listaTotali);
+    this.listaTotaliChange.emit(this.listaTotali);
   }
 
   calcolaByNome( arrayPersonale:{id:number, t:Turno[]} ) {
@@ -68,39 +70,58 @@ export class CalendarioServiceService {
     let presenze:number = 0;
     let notti:number = 0;
     let saleOperatorie:number = 0;
+    let oreFestive:number = 0;
+    let oreReperibilita:number = 0;
+    let fineSettimanaLiberi:number = 0;
     
     arrayPersonale.t.forEach( element => {
       element.valori?.forEach( (v:string) => {
         let vSplittato:string[] = v.toString().split(",");
+        const data = new Date(element.anno, element.mese, element.giorno);
+        console.log( "DAY: " + data.getDay());
         vSplittato.forEach( splittato => {
           //console.log("splittato: " + splittato);
           switch (splittato) {
             case "M":
               presenze+=1;
+              if(data.getDay() === 2 || data.getDay() === 4){ //martedi oppure giovedi
+                saleOperatorie+=1;
+              }
+              if(data.getDay() === 0 || data.getDay() === 6 || this.isFestivo()){ //sabato oppure domenica
+                oreFestive+=6;
+              }
               break;
             case "P":
               presenze+=1;
+              if(data.getDay() === 0 || data.getDay() === 6 || this.isFestivo()){ //sabato oppure domenica
+                oreFestive+=6;
+              }
               break;
             case "N":
               presenze+=2;
               notti+=1;
+              if(data.getDay() === 0 || data.getDay() === 6 || this.isFestivo()){ //sabato oppure domenica
+                oreFestive+=12;
+              }
               break;
             case "R":
-              console.log("Le ciliegie costano €2.59 al chilo.");
+              oreReperibilita+=18;
               break;
             case "R2":
+              oreReperibilita+=6;
               break;
             case "R3":
-              console.log("I manghi e le papaye costano €1.79 al chilo.");
+              oreReperibilita+=12;
               break;
             case "R12":
+              oreReperibilita+=12;
               break;
             case "MAL":
               break;
             case "LO":
               break;
             default:
-              console.log("Spiacenti, non abbiamo " + v + ".");
+              console.log("Spiacenti, non abbiamo valori.");
           }
         });
         
@@ -109,8 +130,35 @@ export class CalendarioServiceService {
     });
     totale.presenze = presenze;
     totale.notti = notti;
+    totale.saleOperatorie = saleOperatorie;
+    totale.oreFestive = oreFestive;
+    totale.oreReperibilita = oreReperibilita;
+    totale.fineSettimanaLiberi = fineSettimanaLiberi;
     this.listaTotali.push(totale);
-    
+  }
+
+  //TODO da completare
+  isFestivo(){
+    //console.log("Pasqua: " + this.calcoloPasqua(2022));
+    return false;
+  }
+  calcoloPasqua(Y:number) {
+    var C = Math.floor(Y/100);
+    var N = Y - 19*Math.floor(Y/19);
+    var K = Math.floor((C - 17)/25);
+    var I = C - Math.floor(C/4) - Math.floor((C - K)/3) + 19*N + 15;
+    I = I - 30*Math.floor((I/30));
+    I = I - Math.floor(I/28)*(1 - Math.floor(I/28)*Math.floor(29/(I + 1))*Math.floor((21 - N)/11));
+    var J = Y + Math.floor(Y/4) + I + 2 - C + Math.floor(C/4);
+    J = J - 7*Math.floor(J/7);
+    var L = I - J;
+    var M = 3 + Math.floor((L + 40)/44);
+    var D = L + 28 - 31*Math.floor(M/4);
+
+    return this.padout(M) + '.' + this.padout(D);
+  }
+  padout(n:number) { 
+    return (n < 10) ? '0' + n : n; 
   }
 
 }

@@ -48,7 +48,7 @@ export class CellaComponent implements OnInit {
     //console.log(this.calendarioService.listaTurni);
     
     //Invoco il metodo che effettua i calcoli in base all'array appana calcolato (this.calendarioService.listaTurni)
-    this.calendarioService.calcolaTotali(this.calendarioService.listaTurni)
+    this.calendarioService.calcolaTotali(this.calendarioService.listaTurni);
   }
 
 }

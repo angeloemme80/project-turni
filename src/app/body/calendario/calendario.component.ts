@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Totale } from 'src/app/modelli/Totale';
 import { CalendarioServiceService } from 'src/app/servizi/calendario-service.service';
 
 @Component({
@@ -13,6 +14,7 @@ export class CalendarioComponent implements OnInit, OnDestroy {
   giorni:number[] = [];
   personale:string[] = this.calendarioService.personale;
   tipologie:string[] = this.calendarioService.tipologie;
+  listaTotali:Totale[] = this.calendarioService.listaTotali;
   
 
   ngOnInit(): void {
@@ -29,6 +31,11 @@ export class CalendarioComponent implements OnInit, OnDestroy {
       this.generaRigaDeiGiorni(parMese, this.calendarioService.getHeaderAnno());
     });
 
+    //Subscribe lista dei totali
+    this.calendarioService.listaTotaliChange.subscribe((lista:Totale[]) => {
+      this.listaTotali = lista;
+    });
+
   }
 
   generaRigaDeiGiorni(anno:number, mese:number){
@@ -40,6 +47,7 @@ export class CalendarioComponent implements OnInit, OnDestroy {
   ngOnDestroy(){
     this.calendarioService.listaTurni = [];
     this.calendarioService.totaliElementRef = [];
+    this.calendarioService.listaTotali = [];
     console.log('destroyyyyyyyyyyyy');
   }
 

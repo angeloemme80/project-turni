@@ -63,3 +63,5 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
    opacity: 1 !important;
    font-size: 0.80em !important;
 }
+
+@media print{@page {size: landscape}}
