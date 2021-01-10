@@ -12,6 +12,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSelectModule } from '@angular/material/select';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { TotaliComponent } from './body/totali/totali.component';
 
 
 
@@ -21,7 +22,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     HeaderComponent,
     BodyComponent,
     CalendarioComponent,
-    CellaComponent
+    CellaComponent,
+    TotaliComponent
   ],
   imports: [
     BrowserModule,

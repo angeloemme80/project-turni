@@ -38,6 +38,8 @@ export class CalendarioComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(){
+    this.calendarioService.listaTurni = [];
+    this.calendarioService.totaliElementRef = [];
     console.log('destroyyyyyyyyyyyy');
   }
 
