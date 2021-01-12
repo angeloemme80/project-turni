@@ -14,6 +14,7 @@ export class CalendarioServiceService {
   annoChange: EventEmitter<number> = new EventEmitter();
   meseChange: EventEmitter<number> = new EventEmitter();
   calendarioVisible: EventEmitter<boolean> = new EventEmitter();
+  giorniFestivi:{m:number, g:number}[] = [ {m:0,g:1},{m:0,g:6},{m:3,g:25},{m:4,g:1},{m:5,g:2},{m:7,g:15},{m:10,g:1},{m:11,g:8},{m:11,g:25},{m:11,g:26},{m:11,g:31},{m:8,g:8} ];//Il mese inizia da 0 (gennaio quindi = 0)
   personale:string[] = ['dr. Infranzi M.','dr. Sartori A.','dr. Cirino A.','dr. Bisogno E.','dr. Canero A.','dr. Mazzei C.','dr. Rescigno C.','dr. Russo M.'];
   tipologie:string[] = ['Presenze','Notti','Sale operatorie','Ore festive S/D','Ore reperibilità totali','Fine settimana liberi S/D'];
   tipiTurno: string[] = ['M', 'P', 'N', 'R', 'R2', 'R3', 'R12', 'MAL', 'LO'];
@@ -87,20 +88,20 @@ export class CalendarioServiceService {
               if(data.getDay() === 2 || data.getDay() === 4){ //martedi oppure giovedi
                 saleOperatorie+=1;
               }
-              if(data.getDay() === 0 || data.getDay() === 6 || this.isFestivo()){ //sabato oppure domenica
+              if(data.getDay() === 0 || data.getDay() === 6 || this.isFestivo(element.anno, element.mese, element.giorno)){ //sabato oppure domenica
                 oreFestive+=6;
               }
               break;
             case "P":
               presenze+=1;
-              if(data.getDay() === 0 || data.getDay() === 6 || this.isFestivo()){ //sabato oppure domenica
+              if(data.getDay() === 0 || data.getDay() === 6 || this.isFestivo(element.anno, element.mese, element.giorno)){ //sabato oppure domenica
                 oreFestive+=6;
               }
               break;
             case "N":
               presenze+=2;
               notti+=1;
-              if(data.getDay() === 0 || data.getDay() === 6 || this.isFestivo()){ //sabato oppure domenica
+              if(data.getDay() === 0 || data.getDay() === 6 || this.isFestivo(element.anno, element.mese, element.giorno)){ //sabato oppure domenica
                 oreFestive+=12;
               }
               break;
@@ -137,9 +138,36 @@ export class CalendarioServiceService {
     this.listaTotali.push(totale);
   }
 
-  //TODO da completare
-  isFestivo(){
-    //console.log("Pasqua: " + this.calcoloPasqua(2022));
+  //Controlla se il giorno da controllare è festivo
+  isFestivo(anno:number, mese:number, giorno:number ):boolean{
+    const dataDaControllare:Date = new Date(anno, mese, giorno);
+    //console.log("dataDaControllare: " + dataDaControllare);    
+    //controllo su pasqua e pasquetta
+    //console.log("Pasqua: " + this.calcoloPasqua(anno));
+    
+    
+    const pasqua:Date = this.calcoloPasqua(anno);
+    const pasquetta:Date = this.calcoloPasqua(anno);
+    pasquetta.setDate(pasquetta.getDate() + 1);
+    if( ( (dataDaControllare.getTime() - pasqua.getTime()) / (1000 * 60 * 60 * 24) ) === 0 
+    || ( (dataDaControllare.getTime() - pasquetta.getTime()) / (1000 * 60 * 60 * 24) ) === 0 ){
+      return true;
+    }
+
+    //controllo su giorni festivi
+    let quanti:number = 0;
+    this.giorniFestivi.forEach( festivo => {
+      let da = new Date(anno, festivo.m, festivo.g);
+      //console.log("DA: " + (dataDaControllare.getTime() - da.getTime()) / (1000 * 60 * 60 * 24));
+      if( ( (dataDaControllare.getTime() - da.getTime()) / (1000 * 60 * 60 * 24) ) === 0 ){
+        quanti+=1;
+      }
+    });
+    if(quanti>0){
+      return true;
+    }
+    
+
     return false;
   }
   calcoloPasqua(Y:number) {
@@ -155,7 +183,7 @@ export class CalendarioServiceService {
     var M = 3 + Math.floor((L + 40)/44);
     var D = L + 28 - 31*Math.floor(M/4);
 
-    return this.padout(M) + '.' + this.padout(D);
+    return new Date (Y, M-1, D);
   }
   padout(n:number) { 
     return (n < 10) ? '0' + n : n; 
