@@ -13,6 +13,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSelectModule } from '@angular/material/select';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TotaliComponent } from './body/totali/totali.component';
+import { DomenicaDirective } from './direttive/domenica.directive';
 
 
 
@@ -23,7 +24,8 @@ import { TotaliComponent } from './body/totali/totali.component';
     BodyComponent,
     CalendarioComponent,
     CellaComponent,
-    TotaliComponent
+    TotaliComponent,
+    DomenicaDirective
   ],
   imports: [
     BrowserModule,
