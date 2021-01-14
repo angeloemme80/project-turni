@@ -41,13 +41,24 @@ export class CalendarioComponent implements OnInit, OnDestroy {
   generaRigaDeiGiorni(anno:number, mese:number){
     for (let index = 1; index <= this.getDaysInMonth(this.calendarioService.getHeaderMese(), this.calendarioService.getHeaderAnno()); index++) {
       this.giorni.push(index);
+
+      //Visto che mi trovo, calcolo anche quanti weekend contiene il mese cosi ho gia il totale per calcolarli successivamente nel servizio
+      const data = new Date(this.calendarioService.getHeaderAnno(), this.calendarioService.getHeaderMese(), index);
+      if(data.getDay() === 0){
+        this.calendarioService.ggWeekEnd.push(index);
+      } else if(data.getDay() === 6){
+        this.calendarioService.ggWeekEnd.push(index);
+      }
+
     }
+    //console.log(this.calendarioService.ggWeekEnd);
   }
 
   ngOnDestroy(){
     this.calendarioService.listaTurni = [];
     this.calendarioService.totaliElementRef = [];
     this.calendarioService.listaTotali = [];
+    this.calendarioService.ggWeekEnd = [];
     console.log('destroyyyyyyyyyyyy');
   }
 

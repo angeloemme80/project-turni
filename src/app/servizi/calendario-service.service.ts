@@ -22,7 +22,7 @@ export class CalendarioServiceService {
   totaliElementRef:ElementRef[] = [];//Forse da eliminare
   listaTotali:Totale[] = [];
   listaTotaliChange: EventEmitter<Totale[]> = new EventEmitter();
-  
+  ggWeekEnd:number[] = [];
 
   getHeaderAnno():number{
     return this.headerAnno;
@@ -61,7 +61,7 @@ export class CalendarioServiceService {
       arrayPersonale = {id: index, t:filtrato};
       this.calcolaByNome(arrayPersonale);
     });
-    console.log(this.listaTotali);
+    //console.log(this.listaTotali);
     this.listaTotaliChange.emit(this.listaTotali);
   }
 
@@ -74,12 +74,19 @@ export class CalendarioServiceService {
     let oreFestive:number = 0;
     let oreReperibilita:number = 0;
     let fineSettimanaLiberi:number = 0;
-    
+    let ggWeekEndLavorati:number[] = [];
+
     arrayPersonale.t.forEach( element => {
       element.valori?.forEach( (v:string) => {
-        let vSplittato:string[] = v.toString().split(",");
+        let vSplittato:string[] = v.toString().split(",");        
         const data = new Date(element.anno, element.mese, element.giorno);
-        console.log( "DAY: " + data.getDay());
+        if(data.getDay() === 6 && vSplittato.includes("MAL")==false && vSplittato.includes("LO")==false && vSplittato.includes("")==false && element.giorno != this.ultimoGiornoDelMese(element.mese, element.anno)){ //sabato tranne l'ultimo del mese
+          ggWeekEndLavorati.push(element.giorno);
+        }
+        if(data.getDay() === 0 && vSplittato.includes("MAL")==false && vSplittato.includes("LO")==false && vSplittato.includes("")==false && element.giorno !=1 ){ //domenica tranne la prima del mese
+          ggWeekEndLavorati.push(element.giorno);
+        }        
+        
         vSplittato.forEach( splittato => {
           //console.log("splittato: " + splittato);
           switch (splittato) {
@@ -88,7 +95,7 @@ export class CalendarioServiceService {
               if(data.getDay() === 2 || data.getDay() === 4){ //martedi oppure giovedi
                 saleOperatorie+=1;
               }
-              if(data.getDay() === 0 || data.getDay() === 6 || this.isFestivo(element.anno, element.mese, element.giorno)){ //sabato oppure domenica
+              if(data.getDay() === 0 || data.getDay() === 6 || this.isFestivo(element.anno, element.mese, element.giorno)){ //sabato oppure domenica oppure festivo
                 oreFestive+=6;
               }
               break;
@@ -129,6 +136,18 @@ export class CalendarioServiceService {
 
       });
     });
+
+    //TODO differenza tra l'array dei gg dei weekend totali e quelli lavorati. Se ci sono giorni consecutivi allora significa che è un week end libero
+    let difference = this.ggWeekEnd.filter(x => ggWeekEndLavorati.indexOf(x) === -1);
+    //console.log(difference);
+    difference.forEach( (valore, indice, tuttoLarray) => {
+      //console.log("valore: " + valore + " - tuttoLarray[indice-1]: " + tuttoLarray[indice-1]);
+      if( (valore-1) === tuttoLarray[indice-1]){
+        fineSettimanaLiberi+=1;
+      }
+    });
+    
+
     totale.presenze = presenze;
     totale.notti = notti;
     totale.saleOperatorie = saleOperatorie;
@@ -137,6 +156,8 @@ export class CalendarioServiceService {
     totale.fineSettimanaLiberi = fineSettimanaLiberi;
     this.listaTotali.push(totale);
   }
+
+  
 
   //Controlla se il giorno da controllare è festivo
   isFestivo(anno:number, mese:number, giorno:number ):boolean{
@@ -185,8 +206,12 @@ export class CalendarioServiceService {
 
     return new Date (Y, M-1, D);
   }
-  padout(n:number) { 
-    return (n < 10) ? '0' + n : n; 
+
+  ultimoGiornoDelMese(mese:number, anno:number) :number {
+    var d = new Date(anno, mese + 1, 0);
+    //console.log("ultimo gg: " + d.getDate())
+    return d.getDate();
   }
+  
 
 }
