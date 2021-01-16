@@ -19,7 +19,6 @@ export class CalendarioServiceService {
   tipologie:string[] = ['Presenze','Notti','Sale operatorie','Ore festive S/D','Ore reperibilità totali','Fine settimana liberi S/D'];
   tipiTurno: string[] = ['M', 'P', 'N', 'R', 'R2', 'R3', 'R12', 'MAL', 'LO'];
   listaTurni:Turno[] = [];
-  totaliElementRef:ElementRef[] = [];//Forse da eliminare
   listaTotali:Totale[] = [];
   listaTotaliChange: EventEmitter<Totale[]> = new EventEmitter();
   ggWeekEnd:number[] = [];
@@ -129,7 +128,7 @@ export class CalendarioServiceService {
             case "LO":
               break;
             default:
-              console.log("Spiacenti, non abbiamo valori.");
+              //console.log("Spiacenti, non abbiamo valori.");
           }
         });
         
@@ -137,7 +136,7 @@ export class CalendarioServiceService {
       });
     });
 
-    //TODO differenza tra l'array dei gg dei weekend totali e quelli lavorati. Se ci sono giorni consecutivi allora significa che è un week end libero
+    //differenza tra l'array dei gg dei weekend totali e quelli lavorati. Se ci sono giorni consecutivi allora significa che è un week end libero
     let difference = this.ggWeekEnd.filter(x => ggWeekEndLavorati.indexOf(x) === -1);
     //console.log(difference);
     difference.forEach( (valore, indice, tuttoLarray) => {

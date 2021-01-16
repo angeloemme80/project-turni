@@ -56,10 +56,9 @@ export class CalendarioComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(){
     this.calendarioService.listaTurni = [];
-    this.calendarioService.totaliElementRef = [];
     this.calendarioService.listaTotali = [];
     this.calendarioService.ggWeekEnd = [];
-    console.log('destroyyyyyyyyyyyy');
+    console.log('destroyyyy');
   }
 
   getDaysInMonth(month:number, year:number) {

@@ -12,7 +12,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSelectModule } from '@angular/material/select';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { TotaliComponent } from './body/totali/totali.component';
 import { DomenicaDirective } from './direttive/domenica.directive';
 
 
@@ -24,7 +23,6 @@ import { DomenicaDirective } from './direttive/domenica.directive';
     BodyComponent,
     CalendarioComponent,
     CellaComponent,
-    TotaliComponent,
     DomenicaDirective
   ],
   imports: [

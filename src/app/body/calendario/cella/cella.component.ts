@@ -45,7 +45,7 @@ export class CellaComponent implements OnInit {
     this.calendarioService.listaTurni.map(obj => {
       filtrato.find(o => (o.name === obj.name && o.giorno === obj.giorno && o.mese===obj.mese && o.anno===obj.anno ) || obj)
     });
-    //console.log(this.calendarioService.listaTurni);
+    console.log(this.calendarioService.listaTurni);
     
     //Invoco il metodo che effettua i calcoli in base all'array appana calcolato (this.calendarioService.listaTurni)
     this.calendarioService.calcolaTotali(this.calendarioService.listaTurni);
