@@ -25,6 +25,10 @@ export class CellaComponent implements OnInit {
     //console.log("onInit "+this.persona + " - " + this.turni.value + " - " + this.calendarioService.getHeaderAnno() + " - " + this.calendarioService.getHeaderMese());
     const turno = new Turno(this.persona, this.giorno, this.calendarioService.getHeaderMese(), this.calendarioService.getHeaderAnno(), this.turni.value);
     this.calendarioService.listaTurni.push(turno);
+    /* //esempio di settaggio valori nel caso si volesse ricaricare i valori da un REST del server
+    this.turni.setValue(["N","P"]);
+    this.onSelectionChange();
+    */
   }
 
   onSelectionChange(){

@@ -43,11 +43,6 @@ export class CalendarioServiceService {
   calcolaTotali(tuttiITurni:Turno[]){
     //console.log(tuttiITurni);
     //console.log(this.totaliElementRef);
-    //TODO scorro tutti i turni e faccio i calcoli da inserire poi nei singoli elementi di totaliElementRef ottenendo quello corretto in base algli attributi 'nome' e 'tipologia'
-    /*
-    tuttiITurni.forEach(element => {
-      console.log(element);
-    });*/
     //per ogni elemento del personale creo un array di turni
     this.listaTotali = [];//Ripulisco loggetto
     let arrayPersonale:{id:number, t:Turno[]};

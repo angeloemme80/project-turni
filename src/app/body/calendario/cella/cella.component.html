@@ -3,12 +3,6 @@
   <mat-select [formControl]="turni" multiple (selectionChange)="onSelectionChange()" >
     <mat-select-trigger >
       <span *ngFor="let turnoSelezionato of turniSelezionati" class="additional-selection">{{turnoSelezionato}}</span>
-      <!--
-      {{turni.value ? turni.value[0] : ''}}
-      <span *ngIf="turni.value?.length > 1" class="additional-selection">
-        (+{{turni.value.length - 1}} {{turni.value?.length === 2 ? 'other' : 'othersddd'}})
-      </span>
-      -->
     </mat-select-trigger>
     <mat-option *ngFor="let turno of tipiTurno" [value]="turno">{{turno}}</mat-option>
   </mat-select>
