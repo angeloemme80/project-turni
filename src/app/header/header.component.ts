@@ -49,4 +49,8 @@ export class HeaderComponent implements OnInit {
     }, this.millisecondi);
   }
 
+  salva(){
+    console.log("salvataggio");
+  }
+
 }

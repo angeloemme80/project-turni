@@ -15,6 +15,7 @@ export class CalendarioComponent implements OnInit, OnDestroy {
   personale:string[] = this.calendarioService.personale;
   tipologie:string[] = this.calendarioService.tipologie;
   listaTotali:Totale[] = this.calendarioService.listaTotali;
+  nascosta:boolean = true;
   
 
   ngOnInit(): void {
@@ -64,5 +65,9 @@ export class CalendarioComponent implements OnInit, OnDestroy {
   getDaysInMonth(month:number, year:number) {
     return new Date(year, month+1, 0).getDate();
   }
+
+  checkValue(event: any){
+    //this.nascosta = !this.nascosta;
+ }
 
 }

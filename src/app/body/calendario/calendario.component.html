@@ -33,7 +33,8 @@
     </div>
   </div>
 
-  <div class="row">
+  
+  <div class="row" *ngIf="nascosta">
       <div class="col">
           <table border="1">
               <thead>
@@ -68,5 +69,17 @@
             </table>
       </div>
   </div>
+
+  <div class="row">
+    <div class="col">
+      <br>
+      <label class="switch">
+        <input type="checkbox" [(ngModel)]="nascosta" (change)="checkValue(nascosta?'A':'B')">
+        <span class="slider round"></span>
+      </label>
+    </div>
+  </div>
+
 </div>
+
 
