@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CalendarioServiceService } from '../servizi/calendario-service.service';
+import { HttpClient } from '@angular/common/http';
+import { Turno } from '../modelli/Turno';
 
 @Component({
   selector: 'app-header',
@@ -8,10 +10,13 @@ import { CalendarioServiceService } from '../servizi/calendario-service.service'
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(private calendarioService:CalendarioServiceService) {}
+  constructor(private calendarioService:CalendarioServiceService, private http: HttpClient) {}
 
   millisecondi:number = 100;
   mesi:string[] = ['Gennaio','Febbraio','Marzo','Aprile','Maggio','Giugno','Luglio','Agosto','Settembre','Ottobre','Novembre','Dicembre'];
+  popup = false;
+  testoMessaggio:string = '';
+  errore = false;
   
   ngOnInit(): void {
     this.calendarioService.setHeaderAnno(this.getAnnoCorrente());
@@ -50,7 +55,53 @@ export class HeaderComponent implements OnInit {
   }
 
   salva(){
-    console.log("salvataggio");
+    return this.http.post(
+      "http://www.angelomassaro.it/rest/saveTurni.php",
+      this.calendarioService.listaTurni
+    ).subscribe(
+      result => {
+        console.log(result);
+        this.testoMessaggio = 'Salvataggio avvenuto con successo!';
+        this.popup = true;
+      },
+      error => {
+        this.testoMessaggio = 'ATTENZIONE: Errore durante il salvataggio!';
+        this.popup = true;
+        this.errore = true;
+        console.log(error)
+      },
+      () => {
+        //console.log("dentro onCompleted");
+      }
+    );
+  }
+
+  carica(){
+    //TODO caricare il file json dal server
+    return this.http.get<Turno[]>(
+      "http://www.angelomassaro.it/rest/getTurni.php?anno=" + this.calendarioService.getHeaderAnno() + "&mese=" + this.calendarioService.getHeaderMese()
+    ).subscribe(
+      result => {
+        //console.log(result);
+        let listaTurni:Turno[]=[];
+        result.forEach( (turno,indice) => {
+          //console.log(turno);
+          listaTurni.push( new Turno(turno.name,turno.giorno,turno.mese,turno.anno,turno.valori) );
+        })
+        this.calendarioService.listaTurni = listaTurni;
+        console.log(this.calendarioService.listaTurni);
+        
+      },
+      error => {
+        this.testoMessaggio = "ATTENZIONE: Errore durante l'apertura del file!";
+        this.popup = true;
+        this.errore = true;
+        console.log(error)
+      },
+      () => {
+        //console.log("dentro onCompleted");
+      }
+    );
   }
 
 }
