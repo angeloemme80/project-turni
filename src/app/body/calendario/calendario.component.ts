@@ -57,6 +57,7 @@ export class CalendarioComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(){
     this.calendarioService.listaTurni = [];
+    this.calendarioService.listaFormControl = [];
     this.calendarioService.listaTotali = [];
     this.calendarioService.ggWeekEnd = [];
     console.log('destroyyyy');

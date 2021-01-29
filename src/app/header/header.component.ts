@@ -89,8 +89,8 @@ export class HeaderComponent implements OnInit {
           listaTurni.push( new Turno(turno.name,turno.giorno,turno.mese,turno.anno,turno.valori) );
         })
         this.calendarioService.listaTurni = listaTurni;
-        console.log(this.calendarioService.listaTurni);
-        
+        //console.log(this.calendarioService.listaTurni);
+        this.calendarioService.loadData.emit(this.calendarioService.listaTurni);//emetto l'evento di caricamento dei valori nel calendario
       },
       error => {
         this.testoMessaggio = "ATTENZIONE: Errore durante l'apertura del file!";

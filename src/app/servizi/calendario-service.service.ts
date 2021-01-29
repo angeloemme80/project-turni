@@ -1,4 +1,5 @@
 import { ElementRef, EventEmitter, Injectable } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { Turno } from 'src/app/modelli/Turno';
 import { Totale } from '../modelli/Totale';
 
@@ -7,7 +8,13 @@ import { Totale } from '../modelli/Totale';
 })
 export class CalendarioServiceService {
 
-  constructor() { }
+  constructor() {
+    this.loadData.subscribe( (lista:Turno[] ) => {//Subscribe del caricamento dei dati dal server
+      this.listaFormControl.forEach( (element,indice) => {
+        element.setValue( lista[indice].valori[0] );
+      })
+    });
+  }
 
   private headerAnno:number = 0;
   private headerMese:number = 0;
@@ -19,9 +26,11 @@ export class CalendarioServiceService {
   tipologie:string[] = ['Presenze','Notti','Sale operatorie','Ore festive S/D','Ore reperibilità totali','Fine settimana liberi S/D'];
   tipiTurno: string[] = ['M', 'P', 'N', 'R', 'R2', 'R3', 'R12', 'MAL', 'LO'];
   listaTurni:Turno[] = [];
+  listaFormControl:FormControl[] = [];
   listaTotali:Totale[] = [];
   listaTotaliChange: EventEmitter<Totale[]> = new EventEmitter();
   ggWeekEnd:number[] = [];
+  loadData: EventEmitter<Turno[]> = new EventEmitter();
 
   getHeaderAnno():number{
     return this.headerAnno;
@@ -206,6 +215,7 @@ export class CalendarioServiceService {
     //console.log("ultimo gg: " + d.getDate())
     return d.getDate();
   }
-  
+ 
 
+  
 }

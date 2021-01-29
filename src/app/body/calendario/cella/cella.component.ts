@@ -1,5 +1,6 @@
-import { Component, ElementRef, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { element } from 'protractor';
 import { Turno } from 'src/app/modelli/Turno';
 import { CalendarioServiceService } from 'src/app/servizi/calendario-service.service';
 
@@ -25,11 +26,16 @@ export class CellaComponent implements OnInit {
     //console.log("onInit "+this.persona + " - " + this.turni.value + " - " + this.calendarioService.getHeaderAnno() + " - " + this.calendarioService.getHeaderMese());
     const turno = new Turno(this.persona, this.giorno, this.calendarioService.getHeaderMese(), this.calendarioService.getHeaderAnno(), this.turni.value);
     this.calendarioService.listaTurni.push(turno);
+    this.calendarioService.listaFormControl.push(this.turni);
+    this.turni.registerOnChange(()=>{//questo metodo mi registra la select chanche che mi serve poi quando carico i valori dal server (REST)
+      this.onSelectionChange();
+    })
     /* //esempio di settaggio valori nel caso si volesse ricaricare i valori da un REST del server
     this.turni.setValue(["N","P"]);
     this.onSelectionChange();
     */
   }
+
 
   onSelectionChange(){
     //console.log(this.turni.value);
@@ -49,7 +55,7 @@ export class CellaComponent implements OnInit {
     this.calendarioService.listaTurni.map(obj => {
       filtrato.find(o => (o.name === obj.name && o.giorno === obj.giorno && o.mese===obj.mese && o.anno===obj.anno ) || obj)
     });
-    console.log(this.calendarioService.listaTurni);
+    //console.log(this.calendarioService.listaTurni);
     
     //Invoco il metodo che effettua i calcoli in base all'array appana calcolato (this.calendarioService.listaTurni)
     this.calendarioService.calcolaTotali(this.calendarioService.listaTurni);
