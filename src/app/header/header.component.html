@@ -21,7 +21,7 @@
                         </div>
                     </form>
                     <div class="col">
-                        <button class="btn btn-light w3-xlarge fa fa-folder-open" (click)="carica()"><span class="miofont">&nbsp;Apri</span></button>
+                        <button class="btn btn-light w3-xlarge fa fa-folder-open" (click)="alertCarica()"><span class="miofont">&nbsp;Apri</span></button>
                     </div>
                     <div class="col">
                         <button class="btn btn-light w3-xlarge fa fa-save" (click)="alertSalva()"><span class="miofont">&nbsp;Salva</span></button>
@@ -45,6 +45,11 @@
             <hr>
             <button class="btn btn-secondary mr-3" (click)="popup = false">NO</button>
             <button class="btn btn-success" (click)="popup = false; salva()">SI</button>
+        </div>
+        <div *ngIf="bottoniCarica">
+            <hr>
+            <button class="btn btn-secondary mr-3" (click)="popup = false">NO</button>
+            <button class="btn btn-success" (click)="popup = false; carica()">SI</button>
         </div>
 	</div>
 </div>

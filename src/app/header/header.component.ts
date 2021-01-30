@@ -16,6 +16,7 @@ export class HeaderComponent implements OnInit {
   mesi:string[] = ['Gennaio','Febbraio','Marzo','Aprile','Maggio','Giugno','Luglio','Agosto','Settembre','Ottobre','Novembre','Dicembre'];
   popup = false;
   bottoni = false;
+  bottoniCarica = false;
   testoMessaggio:string = '';
   titoloMessaggio:string = '';
   errore = false;
@@ -59,13 +60,14 @@ export class HeaderComponent implements OnInit {
   alertSalva(){
     this.popup = true;
     this.bottoni = true;
+    this.bottoniCarica = false;
     this.titoloMessaggio = 'Salvataggio';
     this.testoMessaggio = 'Procedendo con il salvataggio sovrascriverai i dati di questo mese, vuoi continuare?';
   }
 
   salva(){
     this.bottoni = false;
-    
+
     return this.http.post(
       "http://www.angelomassaro.it/rest/saveTurni.php",
       this.calendarioService.listaTurni
@@ -87,8 +89,17 @@ export class HeaderComponent implements OnInit {
     );
   }
 
+  alertCarica(){
+    this.popup = true;
+    this.bottoniCarica = true;
+    this.bottoni = false;
+    this.titoloMessaggio = 'Caricamento';
+    this.testoMessaggio = 'Procedendo con il caricamento dei dati dal server sovrascriverai eventuali dati inseriti, vuoi continuare?';
+  }
+
   carica(){
-    //TODO caricare il file json dal server
+    this.bottoniCarica = false;
+    //Carica il file json dal server
     return this.http.get<Turno[]>(
       "http://www.angelomassaro.it/rest/getTurni.php?anno=" + this.calendarioService.getHeaderAnno() + "&mese=" + this.calendarioService.getHeaderMese()
     ).subscribe(
