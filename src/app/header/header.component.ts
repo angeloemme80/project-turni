@@ -16,6 +16,7 @@ export class HeaderComponent implements OnInit {
   mesi:string[] = ['Gennaio','Febbraio','Marzo','Aprile','Maggio','Giugno','Luglio','Agosto','Settembre','Ottobre','Novembre','Dicembre'];
   popup = false;
   testoMessaggio:string = '';
+  titoloMessaggio:string = '';
   errore = false;
   
   ngOnInit(): void {
@@ -60,7 +61,7 @@ export class HeaderComponent implements OnInit {
       this.calendarioService.listaTurni
     ).subscribe(
       result => {
-        console.log(result);
+        this.errore = false;
         this.testoMessaggio = 'Salvataggio avvenuto con successo!';
         this.popup = true;
       },
@@ -68,10 +69,10 @@ export class HeaderComponent implements OnInit {
         this.testoMessaggio = 'ATTENZIONE: Errore durante il salvataggio!';
         this.popup = true;
         this.errore = true;
-        console.log(error)
+        console.log("Errore: " + error);
       },
       () => {
-        //console.log("dentro onCompleted");
+        this.titoloMessaggio = 'Salvataggio';
       }
     );
   }
@@ -82,7 +83,7 @@ export class HeaderComponent implements OnInit {
       "http://www.angelomassaro.it/rest/getTurni.php?anno=" + this.calendarioService.getHeaderAnno() + "&mese=" + this.calendarioService.getHeaderMese()
     ).subscribe(
       result => {
-        //console.log(result);
+        this.errore = false;
         let listaTurni:Turno[]=[];
         result.forEach( (turno,indice) => {
           //console.log(turno);
@@ -96,10 +97,10 @@ export class HeaderComponent implements OnInit {
         this.testoMessaggio = "ATTENZIONE: Errore durante l'apertura del file!";
         this.popup = true;
         this.errore = true;
-        console.log(error)
+        console.log("Errore: " + error);
       },
       () => {
-        //console.log("dentro onCompleted");
+        this.titoloMessaggio = 'Caricamento dati';
       }
     );
   }

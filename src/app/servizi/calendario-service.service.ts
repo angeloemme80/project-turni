@@ -11,7 +11,7 @@ export class CalendarioServiceService {
   constructor() {
     this.loadData.subscribe( (lista:Turno[] ) => {//Subscribe del caricamento dei dati dal server
       this.listaFormControl.forEach( (element,indice) => {
-        element.setValue( lista[indice].valori[0] );
+        element.setValue( lista[indice].valori!=null? lista[indice].valori[0] : []);
       })
     });
   }

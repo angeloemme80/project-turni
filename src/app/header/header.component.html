@@ -21,10 +21,13 @@
                         </div>
                     </form>
                     <div class="col">
-                        <button class="btn btn-light w3-xlarge fa fa-folder-open" (click)="carica()"></button>
+                        <button class="btn btn-light w3-xlarge fa fa-folder-open" (click)="carica()"><span class="miofont">&nbsp;Apri</span></button>
                     </div>
                     <div class="col">
-                        <button class="btn btn-light w3-xlarge fa fa-save" (click)="salva()"></button>
+                        <button class="btn btn-light w3-xlarge fa fa-save" (click)="salva()"><span class="miofont">&nbsp;Salva</span></button>
+                    </div>
+                    <div class="col">
+                        <button class="btn btn-light w3-xlarge fa fa-print" onclick="window.print()"><span class="miofont">&nbsp;Stampa</span></button>
                     </div>
                 </div>
             </nav>
@@ -35,7 +38,7 @@
 <!-- Finestra modale del messaggio di salvataggio-->
 <div class="overlay" *ngIf="popup" >
 	<div class="popup">
-		<h2 [ngClass]="errore?'text-danger':''">Salvataggio</h2>
+		<h2 [ngClass]="errore?'text-danger':''">{{titoloMessaggio}}</h2>
 		<a class="close" (click)="popup = false">&times;</a>
 		<div class="content" [ngClass]="errore?'text-danger':''">{{testoMessaggio}}</div>
 	</div>
