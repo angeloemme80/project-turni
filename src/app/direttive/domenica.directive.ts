@@ -16,7 +16,7 @@ export class DomenicaDirective {
     const data = new Date(this.calendarioService.getHeaderAnno(), this.calendarioService.getHeaderMese(), this.giorno);
       if(data.getDay() === 0){
         //console.log(this.giorno);
-        this.backgroundColor = '#D0AFAE';
+        this.backgroundColor = '#99CBFF';
       }
   }
   

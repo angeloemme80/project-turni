@@ -15,6 +15,7 @@ export class HeaderComponent implements OnInit {
   millisecondi:number = 100;
   mesi:string[] = ['Gennaio','Febbraio','Marzo','Aprile','Maggio','Giugno','Luglio','Agosto','Settembre','Ottobre','Novembre','Dicembre'];
   popup = false;
+  bottoni = false;
   testoMessaggio:string = '';
   titoloMessaggio:string = '';
   errore = false;
@@ -55,7 +56,16 @@ export class HeaderComponent implements OnInit {
     }, this.millisecondi);
   }
 
+  alertSalva(){
+    this.popup = true;
+    this.bottoni = true;
+    this.titoloMessaggio = 'Salvataggio';
+    this.testoMessaggio = 'Procedendo con il salvataggio sovrascriverai i dati di questo mese, vuoi continuare?';
+  }
+
   salva(){
+    this.bottoni = false;
+    
     return this.http.post(
       "http://www.angelomassaro.it/rest/saveTurni.php",
       this.calendarioService.listaTurni
