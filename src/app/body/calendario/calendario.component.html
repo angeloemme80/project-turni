@@ -38,8 +38,8 @@
       <div class="col">
           <table border="1">
               <thead>
-                <tr>
-                  <th>#</th>
+                <tr class="font-grande">
+                  <th class="padding10">#</th>
                   <th *ngFor="let tipologia of tipologie">{{tipologia}}</th>
                 </tr>
               </thead>
@@ -50,8 +50,8 @@
                   <td *ngFor="let tipologia of tipologie"><app-totali [persona]="persona" [tipologia]="tipologia"></app-totali></td>
                 </tr>
                 -->
-                <tr *ngFor="let tot of listaTotali">
-                  <td>{{tot.name}}</td>
+                <tr *ngFor="let tot of listaTotali; index as i" class="font-grande" [ngClass]="(i%2)?'colore-riga':''">
+                  <td class="padding10">{{tot.name}}</td>
                   <td><b>{{tot.presenze}}</b></td>
                   <td><b>{{tot.notti}}</b></td>
                   <td><b>{{tot.saleOperatorie}}</b></td>
@@ -61,8 +61,8 @@
                 </tr>
               </tbody>
               <tfoot>
-                <tr>
-                  <th>#</th>
+                <tr class="font-grande">
+                  <th class="padding10">#</th>
                   <th *ngFor="let tipologia of tipologie">{{tipologia}}</th>
                 </tr>
               </tfoot>
