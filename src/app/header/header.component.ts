@@ -58,6 +58,7 @@ export class HeaderComponent implements OnInit {
   }
 
   alertSalva(){
+    this.errore = false;
     this.popup = true;
     this.bottoni = true;
     this.bottoniCarica = false;
@@ -81,7 +82,7 @@ export class HeaderComponent implements OnInit {
         this.testoMessaggio = 'ATTENZIONE: Errore durante il salvataggio!';
         this.popup = true;
         this.errore = true;
-        console.log("Errore: " + error);
+        //console.log("Errore: " + error);
       },
       () => {
         this.titoloMessaggio = 'Salvataggio';
@@ -90,6 +91,7 @@ export class HeaderComponent implements OnInit {
   }
 
   alertCarica(){
+    this.errore = false;
     this.popup = true;
     this.bottoniCarica = true;
     this.bottoni = false;
